@@ -4,7 +4,7 @@ import json
 import sys
 
 
-rawurl = "https://analisi.transparenciacatalunya.cat/resource/irki-p3c7"
+
 
 def fetchURL(url):
     response = urlopen(url)
@@ -30,6 +30,7 @@ def extractData(data):
     return cmd
 
 def main():
+    rawurl = "https://analisi.transparenciacatalunya.cat/resource/irki-p3c7"
     db = dbManager()
     db.connect()
     if (len(sys.argv) == 2):
