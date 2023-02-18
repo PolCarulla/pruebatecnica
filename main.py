@@ -1,16 +1,16 @@
 from Components.dbHandler import dbManager
 from urllib.request import urlopen
 import json
+import sys
 
 
-
-rawurl = "https://analisi.transparenciacatalunya.cat/resource/irki-p3c7.json"
+rawurl = "https://analisi.transparenciacatalunya.cat/resource/irki-p3c7"
 
 def fetchURL(url):
     response = urlopen(url)
     return json.loads(response.read())
 
-def exctractData(data):
+def extractData(data):
     result = {}
     for record in data:
         # Get the date and comarca for the record
@@ -32,9 +32,14 @@ def exctractData(data):
 def main():
     db = dbManager()
     db.connect()
+    if (len(sys.argv) == 2):
+        rawurl = sys.argv[1]
     jsonrawdata = fetchURL(rawurl)
-    jsonusabledata = exctractData(jsonrawdata)
+    jsonusabledata = extractData(jsonrawdata)
     db.makeQuery(jsonusabledata)
     db.disconnect()
+
+
+
 if __name__ == "__main__":
     main()
